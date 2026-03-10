@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <meta name="description" content="Resilience is a software and strategy studio that prepares organisations for the unknown.">
     <title>Resilience | A software and strategy studio that prepares you for the unknown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,9 +25,32 @@
             --accent-hover: #8a3218;
             --accent-light: #f3e8e3;
             --accent-dark: #6e2812;
-            --white: #ffffff;
+            --surface: #ffffff;
+            --on-accent: #ffffff;
+            --border-mid: #cccccc;
+            --border-light: #eeeeee;
+            --divider-border: #e0cdc5;
             --mono: 'IBM Plex Mono', 'Courier New', monospace;
             --focus-ring: 0 0 0 3px rgba(166, 60, 30, 0.4);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #141414;
+                --text: #e0e0e0;
+                --text-secondary: #a0a0a0;
+                --border: #e0e0e0;
+                --accent: #d4654a;
+                --accent-hover: #e07a60;
+                --accent-light: #2c1d17;
+                --accent-dark: #f0a898;
+                --surface: #1e1e1e;
+                --on-accent: #ffffff;
+                --border-mid: #3a3a3a;
+                --border-light: #2a2a2a;
+                --divider-border: #3a2820;
+                --focus-ring: 0 0 0 3px rgba(212, 101, 74, 0.4);
+            }
         }
 
         html {
@@ -59,7 +83,7 @@
             top: -100%;
             left: 1rem;
             background: var(--accent);
-            color: var(--white);
+            color: var(--on-accent);
             padding: 0.5rem 1rem;
             font-family: var(--mono);
             font-size: 0.8rem;
@@ -203,7 +227,7 @@
 
         .offerings-table thead th {
             background-color: var(--accent);
-            color: var(--white);
+            color: var(--on-accent);
             font-weight: 600;
             font-size: clamp(0.72rem, 1.4vw, 0.85rem);
             letter-spacing: 0.05em;
@@ -219,9 +243,9 @@
 
         .offerings-table tbody td {
             padding: 1rem;
-            border: 1px solid #cccccc;
+            border: 1px solid var(--border-mid);
             vertical-align: top;
-            background-color: var(--white);
+            background-color: var(--surface);
         }
 
         .offerings-table .row-label {
@@ -250,7 +274,7 @@
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--accent-dark);
-            border: 1px solid #e0cdc5;
+            border: 1px solid var(--divider-border);
         }
 
         /* --- Button --- */
@@ -267,7 +291,7 @@
             font-weight: 600;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--white);
+            color: var(--on-accent);
             background-color: var(--accent);
             border: 2px solid var(--accent);
             padding: 0.75rem 2rem;
@@ -278,7 +302,7 @@
         .contact-btn:hover {
             background-color: var(--accent-hover);
             border-color: var(--accent-hover);
-            color: var(--white);
+            color: var(--on-accent);
         }
 
         .contact-btn:focus-visible {
@@ -290,7 +314,7 @@
         footer {
             margin-top: clamp(3rem, 6vw, 6rem);
             padding-top: 2rem;
-            border-top: 1px solid #cccccc;
+            border-top: 1px solid var(--border-mid);
             font-size: 0.7rem;
             color: var(--text-secondary);
             text-align: center;
@@ -345,12 +369,12 @@
 
             .offerings-table tbody tr {
                 margin-bottom: 0.75rem;
-                border: 1px solid #cccccc;
+                border: 1px solid var(--border-mid);
             }
 
             .offerings-table tbody td {
                 border: none;
-                border-bottom: 1px solid #eeeeee;
+                border-bottom: 1px solid var(--border-light);
                 padding: 0.75rem 1rem;
             }
 
@@ -412,14 +436,14 @@
     <!-- Logo -->
     <div class="logo" aria-hidden="true">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Resilience logo: nested squares converging to a solid centre">
-            <rect x="5" y="5" width="90" height="90" fill="none" stroke="#1a1a1a" stroke-width="3"/>
-            <rect x="15" y="15" width="70" height="70" fill="none" stroke="#1a1a1a" stroke-width="2"/>
-            <rect x="25" y="25" width="50" height="50" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-            <rect x="35" y="35" width="30" height="30" fill="#1a1a1a"/>
-            <line x1="50" y1="0" x2="50" y2="5" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="50" y1="95" x2="50" y2="100" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="0" y1="50" x2="5" y2="50" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="95" y1="50" x2="100" y2="50" stroke="#1a1a1a" stroke-width="2"/>
+            <rect x="5" y="5" width="90" height="90" fill="none" stroke="currentColor" stroke-width="3"/>
+            <rect x="15" y="15" width="70" height="70" fill="none" stroke="currentColor" stroke-width="2"/>
+            <rect x="25" y="25" width="50" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="35" y="35" width="30" height="30" fill="currentColor"/>
+            <line x1="50" y1="0" x2="50" y2="5" stroke="currentColor" stroke-width="2"/>
+            <line x1="50" y1="95" x2="50" y2="100" stroke="currentColor" stroke-width="2"/>
+            <line x1="0" y1="50" x2="5" y2="50" stroke="currentColor" stroke-width="2"/>
+            <line x1="95" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="2"/>
         </svg>
     </div>
 
