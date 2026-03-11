@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="description" content="Resilience is a software and strategy studio that prepares organisations for the unknown.">
+    <title>Resilience | A software and strategy studio that prepares you for the unknown</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f0f0f0;
+            --text: #1a1a1a;
+            --text-secondary: #505050;
+            --border: #1a1a1a;
+            --accent: #2b4c7e;
+            --accent-hover: #1e3a5f;
+            --accent-light: #e8eef5;
+            --accent-centre: #5b8abf;
+            --accent-dark: #1a3356;
+            --surface: #ffffff;
+            --on-accent: #ffffff;
+            --border-mid: #cccccc;
+            --border-light: #eeeeee;
+            --divider-border: #c5d0e0;
+            --mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --focus-ring: 0 0 0 3px rgba(43, 76, 126, 0.4);
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            .contact-btn {
+                transition: none !important;
+            }
+        }
+
+        body {
+            font-family: var(--mono);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- Skip link (accessibility) --- */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            background: var(--accent);
+            color: var(--on-accent);
+            padding: 0.5rem 1rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 1rem;
+        }
+
+        /* --- Container --- */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
+            text-align: center;
+        }
+
+        /* --- Logo --- */
+        .logo {
+            display: inline-block;
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+        }
+
+        .logo svg {
+            width: clamp(56px, 8vw, 80px);
+            height: clamp(56px, 8vw, 80px);
+        }
+
+        /* --- Header --- */
+        header {
+            margin-bottom: clamp(2rem, 5vw, 4rem);
+        }
+
+        h1 {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
+            color: var(--accent);
+        }
+
+        .tagline {
+            font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        /* --- Epigraph --- */
+        figure {
+            margin: 0 auto clamp(2.5rem, 5vw, 4rem) auto;
+            max-width: 600px;
+        }
+
+        blockquote {
+            font-style: italic;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 300;
+            border: none;
+            margin-bottom: 0.25rem;
+        }
+
+        figcaption {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Section headings --- */
+        h2 {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 0.25rem;
+        }
+
+        h3 {
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+            font-weight: 500;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Body text --- */
+        .body-text {
+            text-align: left;
+            max-width: 680px;
+            margin: 0 auto clamp(2.5rem, 5vw, 4rem) auto;
+            font-size: clamp(0.82rem, 1.6vw, 0.9rem);
+            line-height: 1.85;
+            color: var(--text);
+        }
+
+        .body-text p + p {
+            margin-top: 1.2em;
+        }
+
+        .intro {
+            font-size: clamp(0.88rem, 1.8vw, 0.95rem);
+            font-weight: 500;
+            text-align: center;
+            text-wrap: balance;
+            max-width: 680px;
+            margin: 0 auto clamp(2.5rem, 5vw, 4rem) auto;
+        }
+
+        /* --- Offerings table --- */
+        .offerings-section {
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        }
+
+        .offerings-section h2 {
+            margin-bottom: 2rem;
+        }
+
+        .offerings-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: clamp(0.72rem, 1.4vw, 0.8rem);
+            line-height: 1.65;
+            table-layout: fixed;
+        }
+
+        .offerings-table caption {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+        }
+
+        .offerings-table thead th {
+            background-color: var(--accent);
+            color: var(--on-accent);
+            font-weight: 600;
+            font-size: clamp(0.72rem, 1.4vw, 0.85rem);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--accent-dark);
+            vertical-align: top;
+        }
+
+        .offerings-table thead th[scope] {
+            text-align: left;
+        }
+
+        .offerings-table tbody td {
+            padding: 1rem;
+            border: 1px solid var(--border-mid);
+            vertical-align: top;
+            background-color: var(--surface);
+        }
+
+        .offerings-table .row-label {
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--accent-light);
+            padding-bottom: 0.35rem;
+        }
+
+        .offerings-table .cell-title {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .offerings-table .section-divider td {
+            background-color: var(--accent-light);
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-dark);
+            border: 1px solid var(--divider-border);
+        }
+
+        /* --- Button --- */
+        .contact-section {
+            text-align: center;
+            margin: 0 auto;
+            padding-top: 1rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--on-accent);
+            background-color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 0.75rem 2rem;
+            text-decoration: none;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: var(--on-accent);
+        }
+
+        .contact-btn:focus-visible {
+            outline: none;
+            box-shadow: var(--focus-ring);
+        }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: clamp(3rem, 6vw, 6rem);
+            padding-top: 2rem;
+            border-top: 1px solid var(--accent);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* --- Focus styles (accessibility) --- */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* --- Responsive: Tablet (max-width: 880px) --- */
+        @media (max-width: 880px) {
+            .offerings-table {
+                font-size: 0.75rem;
+            }
+
+            .offerings-table thead th {
+                padding: 0.7rem 0.6rem;
+                font-size: 0.72rem;
+            }
+
+            .offerings-table tbody td {
+                padding: 0.75rem 0.6rem;
+            }
+        }
+
+        /* --- Responsive: Mobile (max-width: 640px) --- */
+        @media (max-width: 640px) {
+            .offerings-table,
+            .offerings-table thead,
+            .offerings-table tbody,
+            .offerings-table tr,
+            .offerings-table th,
+            .offerings-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .offerings-table thead tr {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+            }
+
+            .offerings-table .section-divider {
+                display: none;
+            }
+
+            .offerings-table tbody tr {
+                margin-bottom: 0.75rem;
+                border: 1px solid var(--border-mid);
+            }
+
+            .offerings-table tbody td {
+                border: none;
+                border-bottom: 1px solid var(--border-light);
+                padding: 0.75rem 1rem;
+            }
+
+            .offerings-table tbody td:last-child {
+                border-bottom: none;
+            }
+
+            .offerings-table tbody td::before {
+                content: attr(data-col);
+                display: block;
+                font-weight: 400;
+                font-size: 0.65rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--accent);
+                opacity: 0.7;
+                margin-bottom: 0.15rem;
+            }
+
+            .contact-btn {
+                font-size: 0.75rem;
+                padding: 0.65rem 1.5rem;
+            }
+        }
+
+        /* --- Responsive: Small mobile (max-width: 400px) --- */
+        @media (max-width: 400px) {
+            .container {
+                padding: 1.5rem 0.75rem;
+            }
+        }
+
+        /* --- Print --- */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .skip-link,
+            .contact-btn {
+                display: none;
+            }
+
+            .offerings-table thead th {
+                background-color: #333333 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<main id="main" class="container">
+
+    <!-- Logo -->
+    <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Resilience logo: nested squares converging to a solid centre">
+            <rect x="5" y="5" width="90" height="90" fill="none" stroke="var(--accent)" stroke-width="3"/>
+            <rect x="15" y="15" width="70" height="70" fill="none" stroke="var(--accent)" stroke-width="2"/>
+            <rect x="25" y="25" width="50" height="50" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect x="35" y="35" width="30" height="30" fill="var(--accent-centre)"/>
+            <line x1="50" y1="0" x2="50" y2="5" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="50" y1="95" x2="50" y2="100" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="0" y1="50" x2="5" y2="50" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="95" y1="50" x2="100" y2="50" stroke="var(--accent)" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>Resilience</h1>
+        <p class="tagline">Software &amp; Strategy Studio</p>
+    </header>
+
+    <!-- Epigraph -->
+    <figure>
+        <blockquote>
+            <p>&ldquo;Nobody expects the Spanish Inquisition!&rdquo;</p>
+        </blockquote>
+        <figcaption>&mdash; Monty Python&rsquo;s Flying Circus</figcaption>
+    </figure>
+
+    <!-- Intro -->
+    <p class="intro">Resilience is a software and strategy studio that prepares you for the unknown.</p>
+
+    <!-- Why Resilience -->
+    <section aria-labelledby="why-heading">
+        <h2 id="why-heading">Why Resilience?</h2>
+        <h3>It&rsquo;s never a priority, until it must be.</h3>
+
+        <div class="body-text">
+            <p>Nothing remains the same, yet we help your service value remain constant. We ensure organisations can prepare for and adapt to change.</p>
+            <p>Five years ago, jobs were plentiful and the processes we used to design, develop, and build technologies were understood. Since then, our cultural norms, geopolitical expectations, and ways of work have been challenged. Advances in technology and economic and geopolitical shifts are challenging and creating vulnerabilities for organisations.</p>
+            <p>We help organisations evaluate the behavioural, cultural, and technological foundations of their services to ensure that whether it&rsquo;s five or 20 years from now, they can uphold their foundational value.</p>
+        </div>
+    </section>
+
+    <!-- Offerings -->
+    <section class="offerings-section" aria-labelledby="offerings-heading">
+        <h2 id="offerings-heading">Our Offerings</h2>
+
+        <table class="offerings-table">
+            <caption>Overview of Resilience service offerings across Research, Design, Build, and Foresight</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Research</th>
+                    <th scope="col">Design</th>
+                    <th scope="col">Build</th>
+                    <th scope="col">Foresight</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Description row -->
+                <tr>
+                    <td data-col="Research">
+                        <span class="cell-title">Research that informs a strong foundation</span>
+                        Research behavioural, economic, historical, and technological shifts and dependencies.
+                    </td>
+                    <td data-col="Design">
+                        <span class="cell-title">Timeless user experiences</span>
+                        Design experiences based upon foundational behavioural heuristics and design patterns.
+                    </td>
+                    <td data-col="Build">
+                        <span class="cell-title">Software that you can trust to work</span>
+                        Digital software developed and built to adapt and update yet require less overhaul.
+                    </td>
+                    <td data-col="Foresight">
+                        <span class="cell-title">Mapping the territory</span>
+                        Provide artefacts that identify and offer resolution methods to key problem areas over the coming years.
+                    </td>
+                </tr>
+
+                <!-- Section divider: What we deliver -->
+                <tr class="section-divider" aria-hidden="true">
+                    <td colspan="4">What we deliver</td>
+                </tr>
+
+                <!-- What we deliver row -->
+                <tr>
+                    <td data-col="Research &mdash; Deliver">
+                        <span class="row-label">What we deliver</span>
+                        Guiding insights and principles that will guide your service as the landscape shifts.
+                    </td>
+                    <td data-col="Design &mdash; Deliver">
+                        <span class="row-label">What we deliver</span>
+                        Software user experiences that match current user expectations and needs, yet are prepared for future adaptations.
+                    </td>
+                    <td data-col="Build &mdash; Deliver">
+                        <span class="row-label">What we deliver</span>
+                        Software developed and built with durability and longevity in mind. All software is easily transferable and updatable.
+                    </td>
+                    <td data-col="Foresight &mdash; Deliver">
+                        <span class="row-label">What we deliver</span>
+                        Strategy documents that reflect the organisation&rsquo;s value proposition and inform key decisions as inflection points arise.
+                    </td>
+                </tr>
+
+                <!-- Section divider: Why it's needed -->
+                <tr class="section-divider" aria-hidden="true">
+                    <td colspan="4">Why it&rsquo;s needed</td>
+                </tr>
+
+                <!-- Why it's needed row -->
+                <tr>
+                    <td data-col="Research &mdash; Why">
+                        <span class="row-label">Why it&rsquo;s needed</span>
+                        Guiding insights and principles are timeless; they represent your customer&rsquo;s core needs and the foundational requirements, regardless of a shifting landscape.
+                    </td>
+                    <td data-col="Design &mdash; Why">
+                        <span class="row-label">Why it&rsquo;s needed</span>
+                        Software trends and even the way we build them will shift, yet understanding and designing experiences based upon tested heuristics and behavioural constants.
+                    </td>
+                    <td data-col="Build &mdash; Why">
+                        <span class="row-label">Why it&rsquo;s needed</span>
+                        As the cost and expertise needed to develop software decreases, expertise in how to develop and build software that will adapt and withstand change has never been more important.
+                    </td>
+                    <td data-col="Foresight &mdash; Why">
+                        <span class="row-label">Why it&rsquo;s needed</span>
+                        Nothing remains constant, and there are always unknowns. Our foresight strategies help organisations map and prepare for future vulnerabilities.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Contact -->
+    <div class="contact-section">
+        <a href="mailto:hello@resilience.rodeo" class="contact-btn" aria-label="Contact Resilience via email">Contact</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Resilience 2026</p>
+    </footer>
+
+</main>
+
+</body>
+</html>
