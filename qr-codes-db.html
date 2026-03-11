@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Codes – Dave Bill | Resilience</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -34,6 +35,7 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             margin-bottom: 0.25rem;
+            color: #2b4c7e;
         }
 
         .screen-header p {
@@ -57,25 +59,25 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: #ffffff;
-            background-color: #a63c1e;
-            border: 2px solid #a63c1e;
+            background-color: #2b4c7e;
+            border: 2px solid #2b4c7e;
             padding: 0.6rem 1.5rem;
             text-decoration: none;
             cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #8a3218;
-            border-color: #8a3218;
+            background-color: #1e3a5f;
+            border-color: #1e3a5f;
         }
 
         .btn-outline {
             background: transparent;
-            color: #a63c1e;
+            color: #2b4c7e;
         }
 
         .btn-outline:hover {
-            background: #a63c1e;
+            background: #2b4c7e;
             color: #ffffff;
         }
 
@@ -191,7 +193,7 @@
             margin: 2rem auto;
             padding: 0 2rem 2rem;
             text-align: center;
-            border-top: 1px solid #cccccc;
+            border-top: 1px solid #2b4c7e;
             padding-top: 2rem;
         }
 
@@ -200,7 +202,8 @@
             font-weight: 600;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            color: #2b4c7e;
         }
 
         .png-section .png-note {
@@ -295,30 +298,35 @@
         </div>
     </div>
 
-    <!-- Row 2: one 4cm code -->
-    <div class="qr-row">
+        <!-- 3cm x 3cm -->
         <div class="qr-block">
-            <div class="cut-border">
+            <div class="cut-border" id="cut-3cm">
                 <span class="corner-bl"></span>
                 <span class="corner-br"></span>
-                <canvas id="qr-4cm" class="qr-canvas"></canvas>
+                <canvas id="qr-3cm" class="qr-canvas"></canvas>
             </div>
             <p class="qr-label">Dave Bill &mdash; Resilience</p>
-            <p class="qr-size">4 cm &times; 4 cm</p>
+            <p class="qr-size">3 cm &times; 3 cm</p>
             <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
         </div>
     </div>
 
 </div>
 
-<!-- PNG download section (screen only) — single iPhone-optimised image -->
-<div class="png-section" id="png-download">
-    <h2>Save to Phone</h2>
-    <p class="png-note">1024 &times; 1024 px &mdash; optimised for showing on an iPhone screen</p>
-    <div class="png-card">
-        <canvas id="png-phone"></canvas>
-        <p></p>
-        <a id="dl-phone" class="btn" download="qr-dave-bill.png">Download PNG</a>
+<!-- PNG download section (screen only) -->
+<div class="png-section" id="png-downloads">
+    <h2>Download PNG for Phone</h2>
+    <div class="png-downloads">
+        <div class="png-card">
+            <canvas id="png-3cm"></canvas>
+            <p>3 cm (300 DPI &mdash; 354 &times; 354 px)</p>
+            <a id="dl-3cm" class="btn" download="qr-dave-bill-3cm.png">Download 3cm PNG</a>
+        </div>
+        <div class="png-card">
+            <canvas id="png-3cm"></canvas>
+            <p>3 cm (300 DPI &mdash; 354 &times; 354 px)</p>
+            <a id="dl-3cm" class="btn" download="qr-dave-bill-3cm.png">Download 3cm PNG</a>
+        </div>
     </div>
 </div>
 
@@ -348,12 +356,26 @@ function renderPhone() {
     });
 }
 
-var px3 = Math.round(3 * CM_TO_PX);
-var px4 = Math.round(4 * CM_TO_PX);
-renderPrint('qr-3cm-a', px3);
-renderPrint('qr-3cm-b', px3);
-renderPrint('qr-4cm',   px4);
-renderPhone();
+// Convert cm to print pixels (at 96 DPI for screen, matching CSS)
+var CM_TO_PX = 37.795;
+
+// Render print-sized QR codes
+var url = 'https://resilience.rodeo/businesscard-db.html';
+renderQR('qr-3cm', url, Math.round(3 * CM_TO_PX));
+renderQR('qr-3cm', url, Math.round(3 * CM_TO_PX));
+renderQR('qr-4cm', url, Math.round(4 * CM_TO_PX));
+
+// Render high-res PNGs (300 DPI)
+renderQRHighRes('png-3cm', url, 354);
+renderQRHighRes('png-3cm', url, 354);
+
+// Wire up download link
+setTimeout(function () {
+    var c3 = document.getElementById('png-3cm');
+    var c3 = document.getElementById('png-3cm');
+    document.getElementById('dl-3cm').href = c3.toDataURL('image/png');
+    document.getElementById('dl-4cm').href = c4.toDataURL('image/png');
+}, 500);
 </script>
 
 </body>
