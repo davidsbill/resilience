@@ -322,38 +322,55 @@
     </div>
 </div>
 
-<!-- QR Code Generator -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<!-- QR Code Generator (qrcode-generator by Kazuhiko Arase, bundled locally) -->
+<script src="qrcode.min.js"></script>
 <script>
 var TARGET_URL = 'https://resilience.rodeo/businesscard-db.html';
 var CM_TO_PX   = 37.795; // 1 cm at 96 DPI
 
-var opts = { errorCorrectionLevel: 'M', margin: 2, color: { dark: '#000000', light: '#ffffff' } };
+function renderQR(canvasId, displayPx, renderPx) {
+    var qr = qrcode(0, 'M');
+    qr.addData(TARGET_URL);
+    qr.make();
 
-function renderPrint(canvasId, sizePx) {
-    var canvas = document.getElementById(canvasId);
-    canvas.style.width  = sizePx + 'px';
-    canvas.style.height = sizePx + 'px';
-    QRCode.toCanvas(canvas, TARGET_URL, Object.assign({}, opts, { width: sizePx * 2 }));
-}
+    var canvas  = document.getElementById(canvasId);
+    var modCount = qr.getModuleCount();
+    var quiet   = 2;
+    var total   = modCount + quiet * 2;
+    var scale   = Math.ceil(renderPx / total);
+    var size    = total * scale;
 
-function renderPhone() {
-    var canvas = document.getElementById('png-phone');
-    canvas.style.width  = '250px';
-    canvas.style.height = '250px';
-    QRCode.toCanvas(canvas, TARGET_URL, Object.assign({}, opts, { width: 1024 }), function (err) {
-        if (!err) {
-            document.getElementById('dl-phone').href = canvas.toDataURL('image/png');
+    canvas.width  = size;
+    canvas.height = size;
+    canvas.style.width  = displayPx + 'px';
+    canvas.style.height = displayPx + 'px';
+
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = '#000000';
+
+    for (var r = 0; r < modCount; r++) {
+        for (var c = 0; c < modCount; c++) {
+            if (qr.isDark(r, c)) {
+                ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+            }
         }
-    });
+    }
+
+    return canvas;
 }
 
+// Print QR codes (render at 2x for sharpness)
 var px3 = Math.round(3 * CM_TO_PX);
 var px4 = Math.round(4 * CM_TO_PX);
-renderPrint('qr-3cm-a', px3);
-renderPrint('qr-3cm-b', px3);
-renderPrint('qr-4cm',   px4);
-renderPhone();
+renderQR('qr-3cm-a', px3, px3 * 2);
+renderQR('qr-3cm-b', px3, px3 * 2);
+renderQR('qr-4cm',   px4, px4 * 2);
+
+// Phone PNG: 1024x1024 rendered, shown at 250px on screen
+var phoneCanvas = renderQR('png-phone', 250, 1024);
+document.getElementById('dl-phone').href = phoneCanvas.toDataURL('image/png');
 </script>
 
 </body>
