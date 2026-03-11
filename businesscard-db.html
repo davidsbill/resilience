@@ -25,6 +25,7 @@
             --accent: #2b4c7e;
             --accent-hover: #1e3a5f;
             --accent-light: #e8eef5;
+            --accent-centre: #5b8abf;
             --accent-dark: #1a3356;
             --surface: #ffffff;
             --on-accent: #ffffff;
@@ -98,6 +99,7 @@
             text-transform: uppercase;
             margin-bottom: 0.25rem;
             line-height: 1.2;
+            color: var(--accent);
         }
 
         .tagline {
@@ -222,7 +224,7 @@
         footer {
             margin-top: clamp(3rem, 6vw, 6rem);
             padding-top: 2rem;
-            border-top: 1px solid var(--border-mid);
+            border-top: 1px solid var(--accent);
             font-size: 0.7rem;
             color: var(--text-secondary);
             text-align: center;
@@ -262,20 +264,20 @@
     <!-- Logo -->
     <div class="logo" aria-hidden="true">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Resilience logo: nested squares converging to a solid centre">
-            <rect x="5" y="5" width="90" height="90" fill="none" stroke="currentColor" stroke-width="3"/>
-            <rect x="15" y="15" width="70" height="70" fill="none" stroke="currentColor" stroke-width="2"/>
-            <rect x="25" y="25" width="50" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <rect x="35" y="35" width="30" height="30" fill="var(--accent)"/>
-            <line x1="50" y1="0" x2="50" y2="5" stroke="currentColor" stroke-width="2"/>
-            <line x1="50" y1="95" x2="50" y2="100" stroke="currentColor" stroke-width="2"/>
-            <line x1="0" y1="50" x2="5" y2="50" stroke="currentColor" stroke-width="2"/>
-            <line x1="95" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="2"/>
+            <rect x="5" y="5" width="90" height="90" fill="none" stroke="var(--accent)" stroke-width="3"/>
+            <rect x="15" y="15" width="70" height="70" fill="none" stroke="var(--accent)" stroke-width="2"/>
+            <rect x="25" y="25" width="50" height="50" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect x="35" y="35" width="30" height="30" fill="var(--accent-centre)"/>
+            <line x1="50" y1="0" x2="50" y2="5" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="50" y1="95" x2="50" y2="100" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="0" y1="50" x2="5" y2="50" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="95" y1="50" x2="100" y2="50" stroke="var(--accent)" stroke-width="2"/>
         </svg>
     </div>
 
     <!-- Header -->
     <header>
-        <h1><a href="/" style="color: inherit; text-decoration: none;">Resilience</a></h1>
+        <h1><a href="/" style="color: var(--accent); text-decoration: none;">Resilience</a></h1>
         <p class="tagline">Software &amp; Strategy Studio</p>
     </header>
 
