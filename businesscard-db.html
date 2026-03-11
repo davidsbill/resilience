@@ -221,6 +221,49 @@
             box-shadow: var(--focus-ring);
         }
 
+        /* --- Research Study --- */
+        .research-section {
+            max-width: 480px;
+            margin: clamp(2rem, 4vw, 3rem) auto 0 auto;
+            text-align: left;
+            background-color: var(--surface);
+            border: 1px solid var(--border-mid);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .research-section h3 {
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .research-section p {
+            font-size: clamp(0.78rem, 1.5vw, 0.85rem);
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+        }
+
+        .research-section blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0 1rem 0;
+            font-size: clamp(0.75rem, 1.4vw, 0.82rem);
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            background-color: var(--accent-light);
+        }
+
+        .research-section .contact-btn {
+            display: block;
+            text-align: center;
+            margin-top: 1.25rem;
+        }
+
         footer {
             margin-top: clamp(3rem, 6vw, 6rem);
             padding-top: 2rem;
@@ -306,8 +349,7 @@
         <a id="vcard-btn" class="contact-btn" aria-label="Download contact card for Dave Bill">Save Contact</a>
     </div>
 <h3>Sign up for a research study</h3>
-<p>I'm running a research study; the goal:</p>
-<blockquote>To understand how organisations respond when the conditions their services were built for start to shift: what holds up, what breaks, and what gets rethought.</blockquote>
+<p>I'm running a research study the goal to understand how organisations respond when the conditions their services were built for start to shift: what holds up, what breaks, and what gets rethought.</p>
 <p>If you're willing to be interviewed, sign up for a 30-minute call.</p>
     <!-- Research Study -->
     <div class="contact-section">
