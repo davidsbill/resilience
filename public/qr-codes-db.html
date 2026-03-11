@@ -212,6 +212,13 @@
             margin-bottom: 1.5rem;
         }
 
+        .png-downloads {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .png-card {
             text-align: center;
         }
@@ -219,6 +226,8 @@
         .png-card canvas {
             border: 1px solid #eeeeee;
             margin-bottom: 0.75rem;
+            max-width: 200px;
+            height: auto;
         }
 
         .png-card p {
@@ -266,7 +275,7 @@
     <p>QR codes for Dave Bill&rsquo;s business card</p>
     <div class="actions">
         <button class="btn" onclick="window.print()">Print A4 Page</button>
-        <a class="btn btn-outline" href="#png-download">Save PNG for Phone</a>
+        <a class="btn btn-outline" href="#png-downloads">Save PNG for Phone</a>
     </div>
 </div>
 
@@ -283,7 +292,7 @@
             </div>
             <p class="qr-label">Dave Bill &mdash; Resilience</p>
             <p class="qr-size">3 cm &times; 3 cm</p>
-            <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
+            <p class="qr-url">resilience.rodeo/businesscard-db</p>
         </div>
 
         <div class="qr-block">
@@ -294,20 +303,21 @@
             </div>
             <p class="qr-label">Dave Bill &mdash; Resilience</p>
             <p class="qr-size">3 cm &times; 3 cm</p>
-            <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
+            <p class="qr-url">resilience.rodeo/businesscard-db</p>
         </div>
     </div>
 
-        <!-- 3cm x 3cm -->
+    <!-- Row 2: one 4cm code -->
+    <div class="qr-row">
         <div class="qr-block">
-            <div class="cut-border" id="cut-3cm">
+            <div class="cut-border">
                 <span class="corner-bl"></span>
                 <span class="corner-br"></span>
-                <canvas id="qr-3cm" class="qr-canvas"></canvas>
+                <canvas id="qr-4cm" class="qr-canvas"></canvas>
             </div>
             <p class="qr-label">Dave Bill &mdash; Resilience</p>
-            <p class="qr-size">3 cm &times; 3 cm</p>
-            <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
+            <p class="qr-size">4 cm &times; 4 cm</p>
+            <p class="qr-url">resilience.rodeo/businesscard-db</p>
         </div>
     </div>
 
@@ -316,6 +326,7 @@
 <!-- PNG download section (screen only) -->
 <div class="png-section" id="png-downloads">
     <h2>Download PNG for Phone</h2>
+    <p class="png-note">High-resolution 300 DPI images for sharing or printing from your phone.</p>
     <div class="png-downloads">
         <div class="png-card">
             <canvas id="png-3cm"></canvas>
@@ -323,9 +334,9 @@
             <a id="dl-3cm" class="btn" download="qr-dave-bill-3cm.png">Download 3cm PNG</a>
         </div>
         <div class="png-card">
-            <canvas id="png-3cm"></canvas>
-            <p>3 cm (300 DPI &mdash; 354 &times; 354 px)</p>
-            <a id="dl-3cm" class="btn" download="qr-dave-bill-3cm.png">Download 3cm PNG</a>
+            <canvas id="png-4cm"></canvas>
+            <p>4 cm (300 DPI &mdash; 472 &times; 472 px)</p>
+            <a id="dl-4cm" class="btn" download="qr-dave-bill-4cm.png">Download 4cm PNG</a>
         </div>
     </div>
 </div>
@@ -333,24 +344,28 @@
 <!-- QR Code Generator (qrcode-generator by Kazuhiko Arase, bundled locally) -->
 <script src="qrcode.min.js"></script>
 <script>
-var TARGET_URL = 'https://resilience.rodeo/businesscard-db.html';
-var CM_TO_PX   = 37.795; // 1 cm at 96 DPI
+var TARGET_URL = 'https://resilience.rodeo/businesscard-db';
+var CM_TO_PX = 37.795; // 1 cm ≈ 37.795 px at 96 DPI
 
-function renderQR(canvasId, displayPx, renderPx) {
+function renderQR(canvasId, sizeCm, renderPx) {
     var qr = qrcode(0, 'M');
     qr.addData(TARGET_URL);
     qr.make();
 
-    var canvas  = document.getElementById(canvasId);
-    var modCount = qr.getModuleCount();
-    var quiet   = 2;
-    var total   = modCount + quiet * 2;
-    var scale   = Math.ceil(renderPx / total);
-    var size    = total * scale;
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return null;
 
-    canvas.width  = size;
+    var modCount = qr.getModuleCount();
+    var quiet = 2;
+    var total = modCount + quiet * 2;
+    var actualRenderPx = renderPx || Math.round(sizeCm * CM_TO_PX * 3);
+    var scale = Math.ceil(actualRenderPx / total);
+    var size = total * scale;
+    var displayPx = Math.round(sizeCm * CM_TO_PX);
+
+    canvas.width = size;
     canvas.height = size;
-    canvas.style.width  = displayPx + 'px';
+    canvas.style.width = displayPx + 'px';
     canvas.style.height = displayPx + 'px';
 
     var ctx = canvas.getContext('2d');
@@ -369,26 +384,58 @@ function renderQR(canvasId, displayPx, renderPx) {
     return canvas;
 }
 
-// Convert cm to print pixels (at 96 DPI for screen, matching CSS)
-var CM_TO_PX = 37.795;
+function renderHighRes(canvasId, targetPx) {
+    var qr = qrcode(0, 'M');
+    qr.addData(TARGET_URL);
+    qr.make();
 
-// Render print-sized QR codes
-var url = 'https://resilience.rodeo/businesscard-db.html';
-renderQR('qr-3cm', url, Math.round(3 * CM_TO_PX));
-renderQR('qr-3cm', url, Math.round(3 * CM_TO_PX));
-renderQR('qr-4cm', url, Math.round(4 * CM_TO_PX));
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return null;
 
-// Render high-res PNGs (300 DPI)
-renderQRHighRes('png-3cm', url, 354);
-renderQRHighRes('png-3cm', url, 354);
+    var modCount = qr.getModuleCount();
+    var quiet = 2;
+    var total = modCount + quiet * 2;
+    var scale = Math.ceil(targetPx / total);
+    var size = total * scale;
 
-// Wire up download link
+    canvas.width = size;
+    canvas.height = size;
+    canvas.style.width = '200px';
+    canvas.style.height = '200px';
+
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = '#000000';
+
+    for (var r = 0; r < modCount; r++) {
+        for (var c = 0; c < modCount; c++) {
+            if (qr.isDark(r, c)) {
+                ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+            }
+        }
+    }
+
+    return canvas;
+}
+
+// Render print-sized QR codes (3cm and 4cm)
+renderQR('qr-3cm-a', 3);
+renderQR('qr-3cm-b', 3);
+renderQR('qr-4cm', 4);
+
+// Render high-res PNGs for download (300 DPI)
+// 3cm at 300 DPI = 354px, 4cm at 300 DPI = 472px
+renderHighRes('png-3cm', 354);
+renderHighRes('png-4cm', 472);
+
+// Wire up download links
 setTimeout(function () {
     var c3 = document.getElementById('png-3cm');
-    var c3 = document.getElementById('png-3cm');
-    document.getElementById('dl-3cm').href = c3.toDataURL('image/png');
-    document.getElementById('dl-4cm').href = c4.toDataURL('image/png');
-}, 500);
+    var c4 = document.getElementById('png-4cm');
+    if (c3) document.getElementById('dl-3cm').href = c3.toDataURL('image/png');
+    if (c4) document.getElementById('dl-4cm').href = c4.toDataURL('image/png');
+}, 200);
 </script>
 
 </body>
