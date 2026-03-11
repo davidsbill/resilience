@@ -2,6 +2,7 @@
   "name": "resilience",
   "compatibility_date": "2026-03-11",
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "html_handling": "drop-trailing-slash"
   }
 }
