@@ -331,32 +331,30 @@
     </div>
 </div>
 
-<!-- QR Code Generator (proven library) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- QR Code Generator -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script>
-var url = 'https://resilience.rodeo/businesscard-db.html';
-var CM_TO_PX = 37.795; // 1cm at 96 DPI
+var TARGET_URL = 'https://resilience.rodeo/businesscard-db.html';
+var CM_TO_PX   = 37.795; // 1 cm at 96 DPI
 
-function renderToCanvas(canvasId, targetUrl, canvasPx, displayPx) {
-    var container = document.createElement('div');
-    new QRCode(container, {
-        text: targetUrl,
-        width: canvasPx,
-        height: canvasPx,
-        correctLevel: QRCode.CorrectLevel.M
-    });
+var opts = { errorCorrectionLevel: 'M', margin: 2, color: { dark: '#000000', light: '#ffffff' } };
 
+function renderPrint(canvasId, sizePx) {
     var canvas = document.getElementById(canvasId);
-    canvas.width = canvasPx;
-    canvas.height = canvasPx;
-    canvas.style.width = displayPx + 'px';
-    canvas.style.height = displayPx + 'px';
+    canvas.style.width  = sizePx + 'px';
+    canvas.style.height = sizePx + 'px';
+    QRCode.toCanvas(canvas, TARGET_URL, Object.assign({}, opts, { width: sizePx * 2 }));
+}
 
-    setTimeout(function () {
-        var src = container.querySelector('canvas') || container.querySelector('img');
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(src, 0, 0, canvasPx, canvasPx);
-    }, 100);
+function renderPhone() {
+    var canvas = document.getElementById('png-phone');
+    canvas.style.width  = '250px';
+    canvas.style.height = '250px';
+    QRCode.toCanvas(canvas, TARGET_URL, Object.assign({}, opts, { width: 1024 }), function (err) {
+        if (!err) {
+            document.getElementById('dl-phone').href = canvas.toDataURL('image/png');
+        }
+    });
 }
 
 // Convert cm to print pixels (at 96 DPI for screen, matching CSS)
