@@ -91,10 +91,17 @@
             padding: 2rem;
         }
 
+        .qr-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
         .qr-block {
             display: inline-block;
             vertical-align: top;
-            margin: 2rem;
             text-align: center;
         }
 
@@ -193,14 +200,13 @@
             font-weight: 600;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        .png-downloads {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
+        .png-section .png-note {
+            font-size: 0.7rem;
+            color: #505050;
+            margin-bottom: 1.5rem;
         }
 
         .png-card {
@@ -243,8 +249,8 @@
             .print-sheet {
                 padding: 1rem;
             }
-            .qr-block {
-                margin: 1rem;
+            .qr-row {
+                gap: 1rem;
             }
         }
     </style>
@@ -257,29 +263,42 @@
     <p>QR codes for Dave Bill&rsquo;s business card</p>
     <div class="actions">
         <button class="btn" onclick="window.print()">Print A4 Page</button>
-        <a class="btn btn-outline" href="#png-downloads">Download PNG</a>
+        <a class="btn btn-outline" href="#png-download">Save PNG for Phone</a>
     </div>
 </div>
 
-<!-- Printable area -->
+<!-- Printable area: two 3cm + one 4cm -->
 <div class="print-sheet">
-    <div style="text-align: center;">
 
-        <!-- 3cm x 3cm -->
+    <!-- Row 1: two 3cm codes -->
+    <div class="qr-row">
         <div class="qr-block">
-            <div class="cut-border" id="cut-3cm">
+            <div class="cut-border">
                 <span class="corner-bl"></span>
                 <span class="corner-br"></span>
-                <canvas id="qr-3cm" class="qr-canvas"></canvas>
+                <canvas id="qr-3cm-a" class="qr-canvas"></canvas>
             </div>
             <p class="qr-label">Dave Bill &mdash; Resilience</p>
             <p class="qr-size">3 cm &times; 3 cm</p>
             <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
         </div>
 
-        <!-- 4cm x 4cm -->
         <div class="qr-block">
-            <div class="cut-border" id="cut-4cm">
+            <div class="cut-border">
+                <span class="corner-bl"></span>
+                <span class="corner-br"></span>
+                <canvas id="qr-3cm-b" class="qr-canvas"></canvas>
+            </div>
+            <p class="qr-label">Dave Bill &mdash; Resilience</p>
+            <p class="qr-size">3 cm &times; 3 cm</p>
+            <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
+        </div>
+    </div>
+
+    <!-- Row 2: one 4cm code -->
+    <div class="qr-row">
+        <div class="qr-block">
+            <div class="cut-border">
                 <span class="corner-bl"></span>
                 <span class="corner-br"></span>
                 <canvas id="qr-4cm" class="qr-canvas"></canvas>
@@ -288,94 +307,63 @@
             <p class="qr-size">4 cm &times; 4 cm</p>
             <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
         </div>
-
     </div>
+
 </div>
 
-<!-- PNG download section (screen only) -->
-<div class="png-section" id="png-downloads">
-    <h2>Download PNG for Phone</h2>
-    <div class="png-downloads">
-        <div class="png-card">
-            <canvas id="png-3cm"></canvas>
-            <p>3 cm (300 DPI &mdash; 354 &times; 354 px)</p>
-            <a id="dl-3cm" class="btn" download="qr-dave-bill-3cm.png">Download 3cm PNG</a>
-        </div>
-        <div class="png-card">
-            <canvas id="png-4cm"></canvas>
-            <p>4 cm (300 DPI &mdash; 472 &times; 472 px)</p>
-            <a id="dl-4cm" class="btn" download="qr-dave-bill-4cm.png">Download 4cm PNG</a>
-        </div>
+<!-- PNG download section (screen only) — single iPhone-optimised image -->
+<div class="png-section" id="png-download">
+    <h2>Save to Phone</h2>
+    <p class="png-note">1024 &times; 1024 px &mdash; optimised for showing on an iPhone screen</p>
+    <div class="png-card">
+        <canvas id="png-phone"></canvas>
+        <p></p>
+        <a id="dl-phone" class="btn" download="qr-dave-bill.png">Download PNG</a>
     </div>
 </div>
 
 <!-- QR Code Generator (proven library) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-function renderQR(canvasId, url, sizePx) {
-    var canvas = document.getElementById(canvasId);
-    canvas.style.width = sizePx + 'px';
-    canvas.style.height = sizePx + 'px';
-
-    // Create a temporary div for QRCode library
-    var tmpDiv = document.createElement('div');
-    new QRCode(tmpDiv, {
-        text: url,
-        width: sizePx * 2,
-        height: sizePx * 2,
-        correctLevel: QRCode.CorrectLevel.M
-    });
-
-    // Wait for the image to render, then draw to our canvas
-    setTimeout(function () {
-        var img = tmpDiv.querySelector('img') || tmpDiv.querySelector('canvas');
-        canvas.width = sizePx * 2;
-        canvas.height = sizePx * 2;
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, sizePx * 2, sizePx * 2);
-    }, 50);
-}
-
-function renderQRHighRes(canvasId, url, widthPx) {
-    var canvas = document.getElementById(canvasId);
-    canvas.style.width = '200px';
-    canvas.style.height = '200px';
-
-    var tmpDiv = document.createElement('div');
-    new QRCode(tmpDiv, {
-        text: url,
-        width: widthPx,
-        height: widthPx,
-        correctLevel: QRCode.CorrectLevel.M
-    });
-
-    setTimeout(function () {
-        var img = tmpDiv.querySelector('img') || tmpDiv.querySelector('canvas');
-        canvas.width = widthPx;
-        canvas.height = widthPx;
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, widthPx, widthPx);
-    }, 50);
-}
-
-// Convert cm to print pixels (at 96 DPI for screen, matching CSS)
-var CM_TO_PX = 37.795;
-
-// Render print-sized QR codes
 var url = 'https://resilience.rodeo/businesscard-db.html';
-renderQR('qr-3cm', url, Math.round(3 * CM_TO_PX));
-renderQR('qr-4cm', url, Math.round(4 * CM_TO_PX));
+var CM_TO_PX = 37.795; // 1cm at 96 DPI
 
-// Render high-res PNGs (300 DPI)
-renderQRHighRes('png-3cm', url, 354);
-renderQRHighRes('png-4cm', url, 472);
+function renderToCanvas(canvasId, targetUrl, canvasPx, displayPx) {
+    var container = document.createElement('div');
+    new QRCode(container, {
+        text: targetUrl,
+        width: canvasPx,
+        height: canvasPx,
+        correctLevel: QRCode.CorrectLevel.M
+    });
 
-// Set up download links after QR codes render
+    var canvas = document.getElementById(canvasId);
+    canvas.width = canvasPx;
+    canvas.height = canvasPx;
+    canvas.style.width = displayPx + 'px';
+    canvas.style.height = displayPx + 'px';
+
+    setTimeout(function () {
+        var src = container.querySelector('canvas') || container.querySelector('img');
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(src, 0, 0, canvasPx, canvasPx);
+    }, 100);
+}
+
+// Print QR codes (render at 2x for sharpness)
+var px3cm = Math.round(3 * CM_TO_PX);
+var px4cm = Math.round(4 * CM_TO_PX);
+renderToCanvas('qr-3cm-a', url, px3cm * 2, px3cm);
+renderToCanvas('qr-3cm-b', url, px3cm * 2, px3cm);
+renderToCanvas('qr-4cm',   url, px4cm * 2, px4cm);
+
+// Phone PNG: 1024x1024, displayed at 250px on screen
+renderToCanvas('png-phone', url, 1024, 250);
+
+// Wire up download link
 setTimeout(function () {
-    var c3 = document.getElementById('png-3cm');
-    var c4 = document.getElementById('png-4cm');
-    document.getElementById('dl-3cm').href = c3.toDataURL('image/png');
-    document.getElementById('dl-4cm').href = c4.toDataURL('image/png');
+    var c = document.getElementById('png-phone');
+    document.getElementById('dl-phone').href = c.toDataURL('image/png');
 }, 500);
 </script>
 
