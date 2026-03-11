@@ -292,18 +292,6 @@
             <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
         </div>
 
-        <!-- 4cm x 4cm -->
-        <div class="qr-block">
-            <div class="cut-border" id="cut-4cm">
-                <span class="corner-bl"></span>
-                <span class="corner-br"></span>
-                <canvas id="qr-4cm" class="qr-canvas"></canvas>
-            </div>
-            <p class="qr-label">Dave Bill &mdash; Resilience</p>
-            <p class="qr-size">4 cm &times; 4 cm</p>
-            <p class="qr-url">resilience.rodeo/businesscard-db.html</p>
-        </div>
-
     </div>
 </div>
 
@@ -385,13 +373,11 @@ renderQR('qr-4cm', url, Math.round(4 * CM_TO_PX));
 // Render high-res PNGs (300 DPI)
 renderQRHighRes('png-3cm', url, 354);
 renderQRHighRes('png-3cm', url, 354);
-renderQRHighRes('png-4cm', url, 472);
 
 // Set up download links after QR codes render
 setTimeout(function () {
     var c3 = document.getElementById('png-3cm');
     var c3 = document.getElementById('png-3cm');
-    var c4 = document.getElementById('png-4cm');
     document.getElementById('dl-3cm').href = c3.toDataURL('image/png');
     document.getElementById('dl-4cm').href = c4.toDataURL('image/png');
 }, 500);
