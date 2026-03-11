@@ -330,30 +330,43 @@
     </div>
 </div>
 
-<!-- QR Code Generator -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<!-- QR Code Generator (qrcode-generator by Kazuhiko Arase, bundled locally) -->
+<script src="qrcode.min.js"></script>
 <script>
 var TARGET_URL = 'https://resilience.rodeo/businesscard-db.html';
 var CM_TO_PX   = 37.795; // 1 cm at 96 DPI
 
-var opts = { errorCorrectionLevel: 'M', margin: 2, color: { dark: '#000000', light: '#ffffff' } };
+function renderQR(canvasId, displayPx, renderPx) {
+    var qr = qrcode(0, 'M');
+    qr.addData(TARGET_URL);
+    qr.make();
 
-function renderPrint(canvasId, sizePx) {
-    var canvas = document.getElementById(canvasId);
-    canvas.style.width  = sizePx + 'px';
-    canvas.style.height = sizePx + 'px';
-    QRCode.toCanvas(canvas, TARGET_URL, Object.assign({}, opts, { width: sizePx * 2 }));
-}
+    var canvas  = document.getElementById(canvasId);
+    var modCount = qr.getModuleCount();
+    var quiet   = 2;
+    var total   = modCount + quiet * 2;
+    var scale   = Math.ceil(renderPx / total);
+    var size    = total * scale;
 
-function renderPhone() {
-    var canvas = document.getElementById('png-phone');
-    canvas.style.width  = '250px';
-    canvas.style.height = '250px';
-    QRCode.toCanvas(canvas, TARGET_URL, Object.assign({}, opts, { width: 1024 }), function (err) {
-        if (!err) {
-            document.getElementById('dl-phone').href = canvas.toDataURL('image/png');
+    canvas.width  = size;
+    canvas.height = size;
+    canvas.style.width  = displayPx + 'px';
+    canvas.style.height = displayPx + 'px';
+
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = '#000000';
+
+    for (var r = 0; r < modCount; r++) {
+        for (var c = 0; c < modCount; c++) {
+            if (qr.isDark(r, c)) {
+                ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+            }
         }
-    });
+    }
+
+    return canvas;
 }
 
 // Convert cm to print pixels (at 96 DPI for screen, matching CSS)
